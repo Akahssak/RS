@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend.Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend.Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./attt-f09c4-firebase-adminsdk-fbsvc-644355e9cb.json:/app/attt-f09c4-firebase-adminsdk-fbsvc-644355e9cb.json:ro
+    environment:
+      - FLASK_APP=api/app.py
+      - FLASK_RUN_HOST=0.0.0.0
+      - FLASK_ENV=production
+      # Add any Firebase environment variables here if needed
